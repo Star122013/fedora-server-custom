@@ -10,7 +10,7 @@ COPY rootfs/ /
 # - container tooling and dae
 RUN dnf5 install 'dnf5-command(copr)' -y && \
   dnf copr enable zhullyb/v2rayA -y && \
-  dnf update -y linux-firmware iwlwifi-mvm-firmware && \
+  dnf update -y linux-firmware && \
   dnf install -y \
   linux-firmware \
   iwlwifi-mvm-firmware \
