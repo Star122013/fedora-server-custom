@@ -1,0 +1,32 @@
+FROM quay.io/centos-bootc/centos-bootc:stream10
+RUN dnf install -y \
+     anaconda \
+     anaconda-install-env-deps \
+     anaconda-dracut \
+     dracut-config-generic \
+     dracut-network \
+     net-tools \
+     squashfs-tools \
+     grub2-efi-x64-cdboot \
+     python3-mako \
+     lorax-templates-* \
+     biosdevname \
+     prefixdevname \
+     && dnf clean all
+
+# For Fedora 42 this workaround gets EFI files in the right place:
+# RUN dnf reinstall -y shim-x64
+
+# For Fedora 43 or rawhide this workaround gets EFI files in the right
+# place:
+#RUN mkdir -p /boot/efi && cp -ra /usr/lib/efi/*/*/EFI/ /boot/efi
+
+# For others with older bootupd/shim packages this works
+RUN dnf reinstall -y shim-x64
+
+# lorax wants to create a symlink in /mnt which points to /var/mnt
+# on bootc but /var/mnt does not exist on some images.
+#
+# If https://gitlab.com/fedora/bootc/base-images/-/merge_requests/294
+# gets merged this will be no longer needed
+RUN mkdir /var/mnt
