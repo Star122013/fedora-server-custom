@@ -10,9 +10,10 @@ COPY rootfs/ /
 # - container tooling and dae
 RUN dnf5 install 'dnf5-command(copr)' -y && \
   dnf copr enable zhullyb/v2rayA -y && \
-  dnf update -y linux-firmware && \
+  dnf update -y linux-firmware iwlwifi-mvm-firmware && \
   dnf install -y \
   linux-firmware \
+  iwlwifi-mvm-firmware \
   kernel-modules-extra \
   NetworkManager-wifi wpa_supplicant usb_modeswitch iw \
   pciutils usbutils ethtool iproute iputils bind-utils \
@@ -21,8 +22,6 @@ RUN dnf5 install 'dnf5-command(copr)' -y && \
   jq fzf btop zoxide tmux git-delta \
   podman podman-compose \
   dae
-RUN curl -L -o /lib/firmware/iwlwifi-9260-th-b0-jf-b0-46.ucode \
-    https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain/iwlwifi-9260-th-b0-jf-b0-46.ucode
 
 RUN systemctl enable bootc-fetch-apply-updates.timer
 
