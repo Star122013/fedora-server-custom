@@ -10,6 +10,7 @@ COPY rootfs/ /
 # - container tooling and dae
 RUN dnf5 install 'dnf5-command(copr)' -y && \
   dnf copr enable zhullyb/v2rayA -y && \
+  dnf copr enable -y cnachen/mihomo && \
   dnf update -y linux-firmware && \
   dnf install -y \
   linux-firmware \
@@ -21,7 +22,8 @@ RUN dnf5 install 'dnf5-command(copr)' -y && \
   fastfetch curl ripgrep fd bat git helix \
   jq fzf btop zoxide tmux git-delta \
   podman podman-compose \
-  dae dnsmasq 
+  dae dnsmasq mihomo && \
+  dnf clean all
 
 RUN systemctl enable bootc-fetch-apply-updates.timer
 
